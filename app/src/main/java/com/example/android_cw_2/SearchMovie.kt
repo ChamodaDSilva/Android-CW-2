@@ -6,60 +6,78 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
 class SearchMovie : AppCompatActivity() {
-    lateinit var txtRetrived:TextView
+    lateinit var txtRetrived: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_movie)
 
-        txtRetrived=findViewById<TextView>(R.id.txtRetrived)
-        var btnSearch=findViewById<Button>(R.id.btnRetreive)
-        var btnSave=findViewById<Button>(R.id.btnSaveMovie)
-        var editMovieSearch=findViewById<EditText>(R.id.editTextSearchMovie)
-
-        var name="doom"
-
-        var url_string= "https://www.omdbapi.com/?t=$name&apikey=56835c20"
-        // collecting all the JSON string
-        var stb = StringBuilder()
-        val url = URL(url_string)
-        val con: HttpURLConnection = url.openConnection() as HttpURLConnection
+        txtRetrived = findViewById<TextView>(R.id.txtRetrived)
+        var btnSearch = findViewById<Button>(R.id.btnRetreive)
+        var btnSave = findViewById<Button>(R.id.btnSaveMovie)
 
 
-        runBlocking {
-            launch {
-// run the code of the coroutine in a new thread
 
-                withContext(Dispatchers.IO) {
-                    var bf = BufferedReader(InputStreamReader(con.inputStream))
-                    var line: String? = bf.readLine()
-                    while (line != null) {
-                        stb.append(line + "\n")
-                        line = bf.readLine()
-                    }
-                    parseJSON(stb)
-                }
-            }
+        btnSearch?.setOnClickListener {
+            getMovie()
         }
-//        btnSearch.setOnClickListener(){
-//            name=editMovieSearch.text.toString()
-//        }
-
 
 
     }
-    suspend fun parseJSON(stb: java.lang.StringBuilder) {
-// this contains the full JSON returned by the Web Service
+
+    fun getMovie() {
+        var editMovieSearch = findViewById<EditText>(R.id.editTextSearchMovie)
+        val movieName = editMovieSearch!!.text.toString().trim()
+        if (movieName == "") {
+            return
+        }
+        var url_string ="https://www.omdbapi.com/?t=$movieName&apikey=56835c20"
+        var data: String = ""
+
+        // start the fetching of data in the background
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                // this will contain the whole of JSON
+                val stb = StringBuilder("")
+
+                val url = URL(url_string)
+                val con = url.openConnection() as HttpURLConnection
+                val bf: BufferedReader
+                try {
+                    bf = BufferedReader(InputStreamReader(con.inputStream))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    return@withContext
+                }
+
+                var line = bf.readLine()
+                while (line != null) {
+                    stb.append(line)
+                    line = bf.readLine()
+                }
+
+                // pick up all the data
+                data = parseJSON(stb)
+       }
+
+            // display the data
+            txtRetrived?.setText(data)
+        }
+    }
+
+    // extracts the relevant info from the JSON returned by the Web Service
+    fun parseJSON(stb: StringBuilder): String {
+        // extract the actual data
         val json = JSONObject(stb.toString())
         var movieDetails = java.lang.StringBuilder()
         movieDetails.append("\nTitle: "+json.getString("Title"))
@@ -71,6 +89,7 @@ class SearchMovie : AppCompatActivity() {
         movieDetails.append("\nDirector: "+json.getString("Director"))
         movieDetails.append("\nWriter: "+json.getString("Writer"))
         movieDetails.append("\nActors: "+json.getString("Actors"))
-       txtRetrived.setText(movieDetails)
+        movieDetails.append("\nPlot: "+json.getString("Plot"))
+        return movieDetails.toString()
     }
 }
