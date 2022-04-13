@@ -7,7 +7,7 @@
     tools:context=".SearchMovie">
 
     <EditText
-        android:id="@+id/editTextSearch"
+        android:id="@+id/editTextSearchMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
