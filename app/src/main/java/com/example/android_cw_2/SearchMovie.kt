@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.room.Room
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -17,6 +19,18 @@ import java.net.URL
 
 class SearchMovie : AppCompatActivity() {
     lateinit var txtRetrived: TextView
+
+    lateinit var titile:String
+    lateinit var year:String
+    lateinit var rated:String
+    lateinit var released:String
+    lateinit var runtime:String
+    lateinit var genere:String
+    lateinit var director:String
+    lateinit var writer:String
+    lateinit var actors:String
+    lateinit var plot:String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +45,33 @@ class SearchMovie : AppCompatActivity() {
         btnSearch?.setOnClickListener {
             getMovie()
         }
+        btnSave.setOnClickListener{
+            addMovieToDatabase()
+        }
 
 
+    }
+    fun addMovieToDatabase(){
+        val db = Room.databaseBuilder(this, AppDatabase::class.java,
+            "mydatabase").build()
+        val movieDao = db.movieDao()
+        runBlocking {
+            launch {
+                val movies: List<Movie> = movieDao.getAll()//to initialize the pk
+                val movie= Movie(movies.size+1,titile,
+                    year,
+                    rated,
+                    released,
+                    runtime,
+                    genere,
+                    director,
+                    writer,
+                    actors,
+                    plot)
+
+                movieDao.insertUsers(movie)//should be check here code
+            }
+        }
     }
 
     fun getMovie() {
@@ -90,6 +129,21 @@ class SearchMovie : AppCompatActivity() {
         movieDetails.append("\nWriter: "+json.getString("Writer"))
         movieDetails.append("\nActors: "+json.getString("Actors"))
         movieDetails.append("\nPlot: "+json.getString("Plot"))
+
+        //adding data to variables
+        titile=json.getString("Title")
+        year=json.getString("Year")
+        rated=json.getString("Rated")
+        released=json.getString("Released")
+        runtime=json.getString("Runtime")
+        genere=json.getString("Genre")
+        director=json.getString("Director")
+        writer=json.getString("Writer")
+        actors=json.getString("Actors")
+        plot=json.getString("Plot")
+
+
+
         return movieDetails.toString()
     }
 }

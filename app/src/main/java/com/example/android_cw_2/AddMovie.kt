@@ -20,12 +20,12 @@ class AddMovie : AppCompatActivity() {
         val movieDao = db.movieDao()
         runBlocking {
             launch {
-                val movie1 = Movie(1, "The Shawshank Redemption", 1994,"R",
+                val movie1 = Movie(1, "The Shawshank Redemption", "1994","R",
                     "14 Oct 1994","142 min","Drama","Frank Darabont","Stephen King, Frank Darabont",
                     "Tim Robbins, Morgan Freeman, Bob Gunton","Two imprisoned men bond over a number of years, finding solace\n" +
                             "and eventual redemption through acts of common decency.")
                 val movie2= Movie(2,"Batman: The Dark Knight Returns, Part 1",
-                    2012,
+                    "2012",
                 "PG-13",
                 "25 Sep 2012",
                 "76 min",
@@ -38,7 +38,7 @@ class AddMovie : AppCompatActivity() {
                 val movie3=Movie(
                     3,
                     "The Lord of the Rings: The Return of the King",
-                2003,
+                "2003",
                 "PG-13",
                 "17 Dec 2003",
                 "201 min",
@@ -49,7 +49,7 @@ class AddMovie : AppCompatActivity() {
                 )
                 val movie4=Movie(4,
                     "Inception",
-              2010,
+              "2010",
                 "PG-13",
                 "16 Jul 2010",
                 "148 min",
@@ -61,7 +61,7 @@ class AddMovie : AppCompatActivity() {
                 )
                 val movie5=Movie(5,
                     "The Matrix",
-                    1999,
+                    "1999",
                 "R",
                 "31 Mar 1999",
                 "136 min",
