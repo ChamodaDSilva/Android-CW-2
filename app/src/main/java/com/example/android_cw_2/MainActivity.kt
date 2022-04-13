@@ -22,5 +22,9 @@ class MainActivity : AppCompatActivity() {
             var searchMovieWindow= Intent(this,SearchMovie::class.java)
             startActivity(searchMovieWindow)
         }
+        btnSearchActor.setOnClickListener(){
+            var searchActorWindow= Intent(this,SearchActor::class.java)
+            startActivity(searchActorWindow)
+        }
     }
 }
