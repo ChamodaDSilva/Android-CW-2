@@ -142,8 +142,6 @@ class SearchMovie : AppCompatActivity() {
         actors=json.getString("Actors")
         plot=json.getString("Plot")
 
-
-
         return movieDetails.toString()
     }
 }

@@ -45,8 +45,6 @@ class SearchActor : AppCompatActivity() {
                     }
                 }
 
-
-
             }
         }
     }
