@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -31,6 +32,9 @@ class SearchMovieAdvanced : AppCompatActivity() {
         btnAdvancedTemp.setOnClickListener {
             if(editTextSearchMovieAdvanced.text.toString().length>2) {
                 getMovie()
+            }else{
+                var alertBonus= Toast.makeText(applicationContext,"Enter at least 3 characters!",Toast.LENGTH_SHORT)
+                alertBonus.show()
             }
         }
     }
@@ -85,7 +89,7 @@ class SearchMovieAdvanced : AppCompatActivity() {
 
         for (i in 0..jsonArray.length()-1) {
             var movie=jsonArray[i] as JSONObject
-            movieDetails.append("\nTitle: "+movie.getString("Title"))
+            movieDetails.append("\nMovie : "+movie.getString("Title"))
 
         }
 

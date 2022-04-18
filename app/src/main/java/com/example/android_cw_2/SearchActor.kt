@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.room.Room
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -43,6 +44,10 @@ class SearchActor : AppCompatActivity() {
                         actorMovies.add(movie)
                         tvActorMovies.append(movie.Title+"\n"+movie.Actors+"\n\n")
                     }
+                }
+                if(tvActorMovies.text.toString()==""){
+                    var alertBonus= Toast.makeText(applicationContext,"Actor not in the list.",Toast.LENGTH_SHORT)
+                    alertBonus.show()
                 }
 
             }
