@@ -10,8 +10,8 @@
         android:id="@+id/editTextSearchMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
         android:ems="10"
         android:hint="Movie Name"
         android:inputType="textPersonName"
@@ -22,9 +22,10 @@
         android:id="@+id/btnRetreive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="56dp"
         android:text=" Retrieve Movie"
+        android:background="@drawable/circlebackgroundbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,9 +33,10 @@
         android:id="@+id/btnSaveMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="136dp"
         android:text=" Save movie to Database."
+        android:background="@drawable/circlebackgroundbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,9 +44,10 @@
         android:id="@+id/txtRetrived"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="284dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="228dp"
         android:text="TextView"
+        android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

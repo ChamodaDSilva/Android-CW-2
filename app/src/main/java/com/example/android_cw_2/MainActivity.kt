@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
         var btnAddMovie=findViewById<Button>(R.id.btnAddMovieDb)
         var btnSearchMovie=findViewById<Button>(R.id.btnSeachMovies)
         var btnSearchActor=findViewById<Button>(R.id.btnSearchActors)
+        var btnSearchMovieAdvanced=findViewById<Button>(R.id.btnAdvancedSearch)
 
         btnAddMovie.setOnClickListener(){
             var addMovieWindow= Intent(this,AddMovie::class.java)
@@ -25,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         btnSearchActor.setOnClickListener(){
             var searchActorWindow= Intent(this,SearchActor::class.java)
             startActivity(searchActorWindow)
+        }
+        btnSearchMovieAdvanced.setOnClickListener(){
+            var searchMovieAdvancedWindow= Intent(this,SearchMovieAdvanced::class.java)
+            startActivity(searchMovieAdvancedWindow)
         }
     }
 }

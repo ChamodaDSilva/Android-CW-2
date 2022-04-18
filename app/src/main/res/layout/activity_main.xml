@@ -13,6 +13,7 @@
         android:layout_marginStart="112dp"
         android:layout_marginTop="200dp"
         android:text="Add Movies to DB"
+        android:background="@drawable/circlebackgroundbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,6 +24,7 @@
         android:layout_marginStart="104dp"
         android:layout_marginTop="296dp"
         android:text="Search  for Movies"
+        android:background="@drawable/circlebackgroundbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,6 +35,18 @@
         android:layout_marginStart="96dp"
         android:layout_marginTop="392dp"
         android:text="Search for Actors"
+        android:background="@drawable/circlebackgroundbutton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdvancedSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="472dp"
+        android:text="Advanced Movie Search"
+        android:background="@drawable/circlebackgroundbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
