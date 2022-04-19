@@ -8,10 +8,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class AddMovie : AppCompatActivity() {
+    lateinit var tv:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_movie)
-
         val tv = findViewById<TextView>(R.id.tv)
         tv.setText("")
 // create the database
@@ -72,6 +72,9 @@ class AddMovie : AppCompatActivity() {
                 "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence."
                 )
                 movieDao.insertUsers(movie1,movie2,movie3,movie4,movie5)//should be check here code
+
+
+
                 val movies: List<Movie> = movieDao.getAll()
                 for (m in movies) {
                     tv.append("\nMovie Num: ${m.id}\n" +

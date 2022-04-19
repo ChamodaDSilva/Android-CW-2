@@ -26,9 +26,13 @@ class SearchMovieAdvanced : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_movie_advanced)
 
-        editTextSearchMovieAdvanced = findViewById<EditText>(R.id.editTextSearchMovieAdvanced)
-        txtMovieSearchAdvanced = findViewById<TextView>(R.id.txtSearchMovieAdvanced)
+        editTextSearchMovieAdvanced = findViewById(R.id.editTextSearchMovieAdvanced)
+        txtMovieSearchAdvanced = findViewById(R.id.txtSearchMovieAdvanced)
         btnAdvancedTemp = findViewById(R.id.btnAdvancedSearchTemp)
+
+        if(savedInstanceState!=null){
+            txtMovieSearchAdvanced.text=savedInstanceState.getString("tv3")//recover the timer if the programme in resume
+        }
         btnAdvancedTemp.setOnClickListener {
             if(editTextSearchMovieAdvanced.text.toString().length>2) {
                 getMovie()
@@ -94,5 +98,22 @@ class SearchMovieAdvanced : AppCompatActivity() {
         }
 
         return movieDetails.toString()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        /**
+         * to save values when pause the program
+         */
+        super.onSaveInstanceState(outState)
+        outState.putString("tv3",txtMovieSearchAdvanced.text.toString())
+
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        /**
+         * to load values when resume the program
+         */
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.getString("tv3")
     }
 }

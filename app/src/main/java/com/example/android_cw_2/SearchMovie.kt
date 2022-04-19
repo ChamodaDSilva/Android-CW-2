@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.room.Room
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,12 +21,12 @@ import java.net.URL
 class SearchMovie : AppCompatActivity() {
     lateinit var txtRetrived: TextView
 
-    lateinit var titile:String
+    lateinit var title:String
     lateinit var year:String
     lateinit var rated:String
     lateinit var released:String
     lateinit var runtime:String
-    lateinit var genere:String
+    lateinit var genre:String
     lateinit var director:String
     lateinit var writer:String
     lateinit var actors:String
@@ -36,11 +37,23 @@ class SearchMovie : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_movie)
 
-        txtRetrived = findViewById<TextView>(R.id.txtRetrived)
+        txtRetrived = findViewById(R.id.txtRetrived)
         var btnSearch = findViewById<Button>(R.id.btnRetreive)
         var btnSave = findViewById<Button>(R.id.btnSaveMovie)
 
-
+        if(savedInstanceState!=null){
+            txtRetrived.text=savedInstanceState.getString("txtRetrived")
+            title= savedInstanceState.getString("title").toString()
+            year= savedInstanceState.getString("year").toString()
+            rated=savedInstanceState.getString("rated").toString()
+            released=savedInstanceState.getString("released").toString()
+            runtime=savedInstanceState.getString("runtime").toString()
+            genre=savedInstanceState.getString("genre").toString()
+            director= savedInstanceState.getString("director").toString()
+            actors= savedInstanceState.getString("actors").toString()
+            writer= savedInstanceState.getString("writer").toString()
+            plot= savedInstanceState.getString("plot").toString()
+        }
 
         btnSearch?.setOnClickListener {
             getMovie()
@@ -58,18 +71,21 @@ class SearchMovie : AppCompatActivity() {
         runBlocking {
             launch {
                 val movies: List<Movie> = movieDao.getAll()//to initialize the pk
-                val movie= Movie(movies.size+1,titile,
+                val movie= Movie(movies.size+1,title,
                     year,
                     rated,
                     released,
                     runtime,
-                    genere,
+                    genre,
                     director,
                     writer,
                     actors,
                     plot)
 
                 movieDao.insertUsers(movie)//should be check here code
+                var alertBonus= Toast.makeText(applicationContext,"Added to the DB!",
+                    Toast.LENGTH_LONG)
+                alertBonus.show()
             }
         }
     }
@@ -131,17 +147,55 @@ class SearchMovie : AppCompatActivity() {
         movieDetails.append("\nPlot: "+json.getString("Plot"))
 
         //adding data to variables
-        titile=json.getString("Title")
+        title=json.getString("Title")
         year=json.getString("Year")
         rated=json.getString("Rated")
         released=json.getString("Released")
         runtime=json.getString("Runtime")
-        genere=json.getString("Genre")
+        genre=json.getString("Genre")
         director=json.getString("Director")
         writer=json.getString("Writer")
         actors=json.getString("Actors")
         plot=json.getString("Plot")
 
         return movieDetails.toString()
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        /**
+         * to save values when pause the program
+         */
+        super.onSaveInstanceState(outState)
+        outState.putString("txtRetrived",txtRetrived.text.toString())
+        outState.putString("title",title)
+        outState.putString("year",year)
+        outState.putString("rated",rated)
+        outState.putString("released",released)
+        outState.putString("runtime",runtime)
+        outState.putString("genre",genre)
+        outState.putString("director",director)
+        outState.putString("writer",writer)
+        outState.putString("actors",actors)
+        outState.putString("plot",plot)
+
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        /**
+         * to load values when resume the program
+         */
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.getString("txtRetrived")
+        savedInstanceState.getString("title")
+        savedInstanceState.getString("year")
+        savedInstanceState.getString("rated")
+        savedInstanceState.getString("released")
+        savedInstanceState.getString("runtime")
+        savedInstanceState.getString("genre")
+        savedInstanceState.getString("director")
+        savedInstanceState.getString("writer")
+        savedInstanceState.getString("actors")
+        savedInstanceState.getString("plot")
+
+
     }
 }

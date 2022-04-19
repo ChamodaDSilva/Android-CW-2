@@ -11,9 +11,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class SearchActor : AppCompatActivity() {
+    lateinit var tvActorMovies:TextView
+    lateinit var editTextActor:EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_actor)
+
+        tvActorMovies=findViewById(R.id.txtActorMovies)
+        editTextActor=findViewById(R.id.editTextActor)
+
+        if(savedInstanceState!=null){//restarting variable reinitialize
+            tvActorMovies.text=savedInstanceState.getString("tv2")//recover the timer if the programme in resume
+        }
 
         var btnSearchActor=findViewById<Button>(R.id.btnSearchActor)
 
@@ -26,9 +36,10 @@ class SearchActor : AppCompatActivity() {
     }
 
     fun addMovieToDatabase(){
+        /**
+         * to save values to the db
+         */
 
-        var editTextActor=findViewById<EditText>(R.id.editTextActor)
-        var tvActorMovies=findViewById<TextView>(R.id.txtActorMovies)
         tvActorMovies.text=""
 
         var actorMovies= mutableListOf<Movie>()
@@ -52,5 +63,21 @@ class SearchActor : AppCompatActivity() {
 
             }
         }
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        /**
+         * to save values when pause the program
+         */
+        super.onSaveInstanceState(outState)
+        outState.putString("tv2",tvActorMovies.text.toString())
+
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        /**
+         * to load values when resume the program
+         */
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.getString("tv2")
     }
 }
